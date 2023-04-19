@@ -7,14 +7,17 @@ var x = 300
 var y = 100
 var rectx = 200
 var recty = 100
-var currentslot 
+var current
+var candidate
+
 var beginning = true
 func init(xval, yval, rx, ry, curr):
 	x = xval
 	y = yval
 	rectx = rx
 	recty = ry
-	currentslot = curr
+	current = curr
+	candidate = current
 
 func _ready():
 	var collision_box = get_node("Icon/Area2D/collision_box")
@@ -30,16 +33,39 @@ func _ready():
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if Input.is_action_just_pressed("click"):
 		selected = true
-		beginning = false
+		beginning = true
 		
 func _physics_process(delta):
-	if not beginning:
+	if beginning:
 		if selected:
 			global_position = lerp(global_position, get_global_mouse_position(), 25 * delta)
 #			look_at(get_global_mouse_position())
 		else:
-			global_position = lerp(global_position, rest_point, 10 * delta)
-#			rotation = lerp_angle(rotation, 0, 10 * delta)
+			if current == candidate:
+				global_position = lerp(global_position, candidate.pos + Vector2(rectx/2, recty/2), 20 * delta)
+			else:
+				if candidate.occupied == true:
+					print("swap!")
+					var temp1 = candidate.ans
+					var temp2 = current.ans
+					candidate.ans.current = current
+					candidate.ans.candidate = current
+					current.ans = temp1
+					current = candidate
+					current.ans = temp2
+
+					temp1 = null
+					temp2 = null
+					global_position = lerp(global_position, candidate.pos + Vector2(rectx/2, recty/2), 20 * delta)
+				else:
+					print("moved")
+					candidate.ans = current.ans
+					current.ans = null
+					candidate.occupied = true
+					current.occupied = false
+					current = candidate
+					global_position = lerp(global_position, candidate.pos + Vector2(rectx/2, recty/2), 20 * delta)
+	#			rotation = lerp_angle(rotation, 0, 10 * delta)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -52,7 +78,8 @@ func _input(event):
 					child.select()
 					rest_point = child.pos + Vector2(rectx/2, recty/2)
 					shortest_dist = distance
+					candidate = child
 
 
-func topple():
-	$AnimationPlayer.play("topple")
+#func topple():
+#	$AnimationPlayer.play("topple")

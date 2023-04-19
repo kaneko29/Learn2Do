@@ -1,6 +1,6 @@
 extends Node2D
 
-var N = 10
+var N = 4
 var rx = 200
 var ry = 100
 var questions = []
@@ -27,6 +27,8 @@ func _ready():
 		answers[i] = preload("res://appsforzgood.tscn").instance()
 		answers[i].init(rx * 3/2 + rx/2, ry + (ry/2 + + ry) * i, rx, ry, ansslots[i])
 		add_child(answers[i])
+	for i in range(N):
+		ansslots[i].addans(answers[i])
 
 	#var box1 = preload("res://DropZone.tscn").instance()
 	#box1.init(rx, ry)
