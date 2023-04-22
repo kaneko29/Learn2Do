@@ -9,22 +9,30 @@ var rectx = 200
 var recty = 100
 var current
 var candidate
-
+var img
 var beginning = true
-func init(xval, yval, rx, ry, curr):
+func init(xval, yval, rx, ry, curr, link):
 	x = xval
 	y = yval
 	rectx = rx
 	recty = ry
 	current = curr
 	candidate = current
+	img = link
 
 func _ready():
+	var sprite = get_node("Icon")
 	var collision_box = get_node("Icon/Area2D/collision_box")
+	var texturex = load(img)
+	sprite.texture = texturex
+	var size2 = texturex.get_size()
+	
 	var shape = collision_box.shape as RectangleShape2D
-	var size = shape.extents * 2
-	scale.x = 0.7 * rectx / size.x
-	scale.y = 0.7 * recty / size.y
+	shape.extents.x = rectx / 2
+	shape.extents.y = recty / 2
+	scale.x = 0.7 * rectx / size2.x
+	scale.y = 0.7 * recty / size2.y
+	
 	rest_nodes = get_tree().get_nodes_in_group("zone")
 	rest_point = rest_nodes[0].pos + Vector2(rectx/2, recty/2)
 	rest_nodes[0].select()
