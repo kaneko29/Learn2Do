@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/brushteth.jpeg-e4bcc856e9c453841c7a2b4b6ff0a55e.stex"
+path="res://.import/tooth4.png-115b77491b2a6c21e7d7840c79e89686.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://brushteth.jpeg"
-dest_files=[ "res://.import/brushteth.jpeg-e4bcc856e9c453841c7a2b4b6ff0a55e.stex" ]
+source_file="res://tooth/tooth4.png"
+dest_files=[ "res://.import/tooth4.png-115b77491b2a6c21e7d7840c79e89686.stex" ]
 
 [params]
 
